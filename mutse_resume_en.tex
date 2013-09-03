@@ -1,0 +1,393 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Name: XeTeX+xeCJK日常使用模板
+% Author: Lox Freeman
+% Email: xiaohanyu1988@gmail.com
+% Homepage: http://cnlox.is-programmer.com
+% 
+% 本文档可以自由转载、修改，希望能给广大TeXer的中文之路提供一些方便。
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper, 10pt, titlepage]{article}
+% 设定纸张大小为A4, 基本字体大小为12pt, 文章题目单独为一页， 
+% 文档类型为article
+
+%%%%%%%%%%%%%%%%%%%%%%%%%xeCJK相关宏包%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{xltxtra,fontspec,xunicode}
+%\usepackage[slantfont, boldfont, CJKaddspaces]{xeCJK} 
+% \CJKsetecglue{\hskip 0.15em plus 0.05em minus 0.05em}
+% slanfont: 允许斜体
+% boldfont: 允许粗体
+% CJKnormalspaces: 仅忽略汉字之间的空白,但保留中英文之间的空白。 
+% CJKchecksingle: 避免单个汉字单独占一行。
+% CJKaddspaces: [备选]忽略汉字之间的空白,并且自动在中英文转换时插入空白。
+
+% character encoding
+\usepackage{xunicode, xltxtra}
+%\setmainfont[Mapping=tex-text]{文泉驿正黑}
+%\setsansfont[Mapping=tex-text]{文泉驿正黑}
+\XeTeXlinebreaklocale "zh"             % 针对中文进行断行
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+                                       % 给予TeX断行一定自由度
+%%%%%%%%%%%%%%%%%%%%%%%%%xeCJK%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%日常所用宏包、通通放在一起%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 什么常用的宏包都可以放这里。下面是我常用的宏包，每个都给出了简要注释
+\usepackage[top=2.2cm, bottom=2cm, left=2cm, right=2cm]{geometry}                               
+                                     % 控制页边距
+\usepackage{enumerate}               % 控制项目列表
+\usepackage{multicol}                % 多栏显示
+
+\usepackage[%
+    pdfstartview=FitH,%
+    %CJKbookmarks=true,%
+    bookmarks=true,%
+    bookmarksnumbered=true,%
+    bookmarksopen=true,%
+    colorlinks=true,%
+    citecolor=blue,%
+    linkcolor=blue,%
+    anchorcolor=green,%
+    urlcolor=blue%
+]{hyperref}                          % hyperref宏包，生成可定位点击的超链接
+
+
+\usepackage{titlesec}                % 控制标题
+\usepackage{booktabs}                % 控制表格样式
+\usepackage{titletoc}                % 控制目录
+\usepackage{type1cm}                 % 控制字体大小
+\usepackage{indentfirst}             % 首行缩进，用\noindent取消某段缩进
+\usepackage{color,xcolor}            % 支持彩色文本、底色、文本框等
+\usepackage{amsmath}                 % AMS LaTeX宏包
+% \usepackage{amssymb}
+% \usepackage{bbding}                % 一些特殊符号
+% \usepackage{cite}                  % 支持引用
+% \usepackage{latexsym}              % LaTeX一些特殊符号宏包
+% \usepackage{bm}                    % 数学公式中的黑斜体
+% \usepackage{relsize}               % 调整公式字体大小：\mathsmaller, \mathlarger
+% \makeindex                         % 生成索引
+
+%%%%%%%%%%%%%%%%%%%%%%%%%基本插图方法%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}                % 图形宏包
+\usepackage{subfig}                  % 多个图形并排，参加lnotes.pdf
+% \begin{figure}[htbp]               % 控制插图位置
+%   \setlength{\abovecaptionskip}{0pt}    
+%   \setlength{\belowcaptionskip}{10pt}
+                                     % 控制图形和上下文的距离
+%   \centering                       % 使图形居中显示
+%   \includegraphics[width=0.8\textwidth]{CTeXLive2008.jpg}
+                                     % 控制图形显示宽度为0.8\textwidth
+%   \caption{CTeXLive2008安装过程} \label{fig:CTeXLive2008}
+                                     % 图形题目和交叉引用标签
+% \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%插图方法结束%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%pgf/tikz绘图宏包设置%%%%%%%%%%%%%%%%%%%%
+\usepackage{pgf,tikz}
+\usetikzlibrary{shapes,automata,snakes,backgrounds,arrows}
+\usetikzlibrary{mindmap} 
+% \usepackage[shell,pgf,outputdir={docgraphs/}]{dot2texi}
+                                     % 直接在latex文档中使用graphviz/dot语言
+                                     % 也可以用dot2tex工具将dot文件转换成tex文件再include进来
+%%%%%%%%%%%%%%%%%%%%pgf/tikz end%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%fancyhdr设置页眉页脚%%%%%%%%%%%%%%%%%%%%
+\usepackage{fancyhdr}                % 页眉页脚
+\pagestyle{plain}                    % 页眉页脚风格
+\setlength{\headheight}{15pt}        % 有时会出现\headheight too small的warning
+%\fancyhf{}                          % 清空当前页眉页脚的默认设置
+%%%%%%%%%%%%%%%%%%%%%%%%%fancyhdr设置结束%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%listings宏包粘贴源码%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}                % 方便粘贴源代码，部分代码高亮功能
+\lstloadlanguages{}                  % 所要粘贴代码的编程语言
+
+%%%%设置listings宏包的一些全局样式%%%%
+%%%参见http://hi.baidu.com/shawpinlee/blog/item/9ec431cbae28e41cbe09e6e4.html%%%%
+\lstset{
+showstringspaces=false               % 设定是否显示代码之间的空格符号
+numbers=left,                        % 在左边显示行号
+numberstyle=\tiny,                   % 设定行号字体的大小
+basicstyle=\tiny,                    % 设定字体大小\tiny, \small, \Large等等
+keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50},
+                                     % 关键字高亮
+frame=shadowbox,                     % 给代码加框
+rulesepcolor=\color{red!20!green!20!blue!20},
+escapechar=`,                        % 中文逃逸字符，用于中英混排
+xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
+breaklines,                          % 这条命令可以让LaTeX自动将长的代码行换行排版
+extendedchars=false                  % 这一条命令可以解决代码跨页时，章节标题，页眉等汉字不显示的问题
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%listings宏包设置结束%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%附录设置%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[title,titletoc,header]{appendix}
+%%%%%%%%%%%%%%%%%%%%%%%%%附录设置结束%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%xeCJK字体设置%%%%%%%%%%%%%%%%%%%%%%%%%
+%\punctstyle{kaiming}                                        % 设置中文标点样式
+                                                            % 支持quanjiao、banjiao、kaiming等多种方式
+%\setCJKmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}   % 设置缺省中文字体
+%\setCJKsansfont[BoldFont=Adobe Heiti Std]{Adobe Kaiti Std}  % 设置中文无衬线字体
+%\setCJKmonofont{Adobe Heiti Std}                            % 设置等宽字体
+%\setmainfont{DejaVu Serif}                                  % 英文衬线字体
+%\setmonofont{DejaVu Sans Mono}                              % 英文等宽字体
+%\setsansfont{DejaVu Sans}                                   % 英文无衬线字体
+
+%%%%定义新字体%%%%
+%\setCJKfamilyfont{song}{Adobe Song Std}                     
+%\setCJKfamilyfont{kai}{Adobe Kaiti Std}
+%\setCJKfamilyfont{hei}{Adobe Heiti Std}
+%\setCJKfamilyfont{fangsong}{Adobe Fangsong Std}
+%\setCJKfamilyfont{lisu}{LiSu}
+%\setCJKfamilyfont{youyuan}{YouYuan}
+
+%\newcommand{\song}{\CJKfamily{song}}                       % 自定义宋体
+%\newcommand{\kai}{\CJKfamily{kai}}                         % 自定义楷体
+%\newcommand{\hei}{\CJKfamily{hei}}                         % 自定义黑体
+%\newcommand{\fangsong}{\CJKfamily{fangsong}}               % 自定义仿宋体
+%\newcommand{\lisu}{\CJKfamily{lisu}}                       % 自定义隶书
+%\newcommand{\youyuan}{\CJKfamily{youyuan}}                 % 自定义幼圆
+
+\newcommand{\yihao}{\fontsize{26pt}{36pt}\selectfont}       % 一号, 1.4倍行距
+\newcommand{\erhao}{\fontsize{22pt}{28pt}\selectfont}       % 二号, 1.25倍行距
+\newcommand{\xiaoer}{\fontsize{18pt}{18pt}\selectfont}      % 小二, 单倍行距
+\newcommand{\sanhao}{\fontsize{16pt}{24pt}\selectfont}      % 三号, 1.5倍行距
+\newcommand{\xiaosan}{\fontsize{15pt}{22pt}\selectfont}     % 小三, 1.5倍行距
+\newcommand{\sihao}{\fontsize{14pt}{21pt}\selectfont}       % 四号, 1.5倍行距
+\newcommand{\bansi}{\fontsize{13pt}{19.5pt}\selectfont}     % 半四, 1.5倍行距
+\newcommand{\xiaosi}{\fontsize{12pt}{18pt}\selectfont}      % 小四, 1.5倍行距
+\newcommand{\dawu}{\fontsize{11pt}{11pt}\selectfont}        % 大五, 单倍行距
+\newcommand{\wuhao}{\fontsize{10.5pt}{10.5pt}\selectfont}   % 五号, 单倍行距
+%%%%%%%%%%%%%%%%%%%%%%%%%xeCJK字体设置结束%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%一些关于中文文档的重定义%%%%%%%%%%%%%%%%%
+
+%%%%%数学公式定理的重定义%%%%
+\newtheorem{example}{例}                                   % 整体编号
+\newtheorem{algorithm}{算法}
+\newtheorem{theorem}{定理}[section]                         % 按 section 编号
+\newtheorem{definition}{定义}
+\newtheorem{axiom}{公理}
+\newtheorem{property}{性质}
+\newtheorem{proposition}{命题}
+\newtheorem{lemma}{引理}
+\newtheorem{corollary}{推论}
+\newtheorem{remark}{注解}
+\newtheorem{condition}{条件}
+\newtheorem{conclusion}{结论}
+\newtheorem{assumption}{假设}
+
+%%%%章节等名称重定义%%%%
+\renewcommand{\contentsname}{目录}     
+\renewcommand{\abstractname}{摘要}
+\renewcommand{\indexname}{索引}
+\renewcommand{\listfigurename}{插图目录}
+\renewcommand{\listtablename}{表格目录}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\appendixname}{附录}
+\renewcommand{\appendixpagename}{附录}
+\renewcommand{\appendixtocname}{附录}
+\renewcommand\refname{参考文献} 
+
+%%%%设置chapter、section与subsection的格式%%%%
+\titleformat{\chapter}{\centering\huge}{第\thechapter{}篇}{1em}{\textbf}
+\titleformat{\section}{\centering\sihao}{\thesection}{1em}{\textbf}
+\titleformat{\subsection}{\xiaosi}{\thesubsection}{1em}{\textbf}
+\titleformat{\subsubsection}{\xiaosi}{\thesubsubsection}{1em}{\textbf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%中文重定义结束%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%一些个性设置%%%%%%%%%%%%%%%%%%%%%%
+% \renewcommand{\baselinestretch}{1.3}     % 效果同\linespread{1.3}
+% \pagenumbering{arabic}                   % 设定页码方式，包括arabic、roman等方式
+% \sloppy                                  % 有时LaTeX无从断行，产生overfull的错误，
+                                           % 这条命令降低LaTeX断行标准
+% \setlength{\parskip}{0.5\baselineskip}     % 设定段间距
+\linespread{1}                             % 设定行距
+\newcommand{\pozhehao}{\kern0.3ex\rule[0.8ex]{2em}{0.1ex}\kern0.3ex}
+                                           % 中文破折号，据说来自清华模板
+
+\usepackage{textcomp}             % for \textcelsius
+\renewcommand{\arraystretch}{1.5} % 將表格行間距加大為原來的 1.5 倍
+%%%%%%%%%%%%%%%%%%%%%%%%%个性设置结束%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%bibtex设置%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{plain}                  % 设定参考文献显示风格
+%%%%%%%%%%%%%%%%%%%%%%%%%bibtex设置结束%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%正文部分%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\renewcommand{\normalsize}{\wuhao}         % 设定正文字体大小
+
+\setlength{\parindent}{0em}                    
+% 设定首行缩进为2em。注意此设置一定要在document环境之中。
+% 这可能与\setlength作用范围相关
+\newcommand{\mysection}[1]{\vspace{5pt} {\bfseries \textsl{#1}} \\ {\color{gray} \rule[5pt]{\textwidth}{0.3pt}}}
+\renewcommand{\labelitemi}{$\bullet$}
+
+\definecolor{headings}{HTML}{701112}  % dark red
+\newcommand{\cvtitle}[1]{\centerline{\huge \textbf{#1}} \bigskip}
+%\newcommand{\career}[2]{\vspace{5pt} {{\bfseries \textsl{#1}} {\normalsize{#2}}} \\ {\color{gray} \rule[5pt]{\textwidth}{0.3pt}}}
+\newcommand{\career}[2]{\vspace{5pt} {{\bfseries \textsl{#1}} \hspace{5pt} {\normalsize{#2}}} \\}
+\pagestyle{empty}
+
+\cvtitle{Mutse}
+%\career{OBJECTIVE}{C++/C Software Engineer}
+\career{CAREER}{Linux Software Engineer}
+
+\mysection{INFORMATION}
+\begin{minipage}[t]{0.495\textwidth}
+  Native Name: Mutse Young \\
+  Gender: Male \\
+  Date of Birth: February 2th, 1985\\
+  Hometown: Wuhan of Hubei Province
+\end{minipage}
+\begin{minipage}[t]{0.495\textwidth}
+  Years of Working: 5+ years\\
+  Phone: (+86) 13412345678 \\
+  %Twitter: \href{https://twitter.com/mutse\_young}{https://twitter.com/mutse\_young} \\
+  Email: \href{mailto:yyhoo2.young@gmail.com}{yyhoo2.young@gmail.com} \\
+  Blog: \href{http://mutse.tk}{http://mutse.tk}
+\end{minipage}
+
+\vspace{3mm}
+\mysection{EDUCATION}
+\begin{itemize}
+
+\item Hubei University of Technology \hfill \textrm{Wuhan, Hubei Province}
+  \begin{itemize}
+  \item Bachelor degree in Information \& Computational Science of Science College.  \hfill \textrm{Sep 2004-Jun 2008}
+  \end{itemize}
+
+\end{itemize}
+
+\mysection{SKILLS}
+\begin{itemize}
+\item \textbf{Programming Languages:} C, C++, GTK+, QT, Bash Shell, Python.
+\item \textbf{Operation Systems:} Windows7, Linux(Ubuntu, Redhat, Debian, OpenSuSE), Unix(SGI, SCO, FreeBSD).
+\item \textbf{Applications:} Vim, GDB, Git, bzr, QtCreator, etc.
+\item \textbf{English:} CET-4, Reading \& Translating some English material related to programming language.
+\item \textbf{Miscellaneous:} {\LaTeX}, DEB \& RPM Packaging, Ubuntu LiveCD Customization, etc.
+\end{itemize}
+
+\mysection{PROJECTS EXPERIENCE}
+\begin{itemize}
+
+% Project 1
+\item \textbf{OS Installation on PARC Blade Servers Automately} \hfill \textrm{Aug 2011-Nov 2011}
+  \begin{itemize}
+  \item Implemented and installed different operation systems on PARC blade servers through the network service \& bash, and customized product software.
+  \end{itemize}
+
+% Project 2
+\item \textbf{Development \& Maintaince of Huawei ATE Software} \hfill \textrm{Sep 2010-July 2011}
+   \begin{itemize}
+   \item Took primary responsibilities for developing \& maintaining ATE software of Huawei Wireless Test Equipment Department, and guided the production test.
+   \end{itemize}
+
+% Project 3
+\item \textbf{Tools Tansplantation Based on AF Simualation Platform} \hfill \textrm{Jan 2010-Apr 2010}
+   \begin{itemize}
+   \item In charge of tansplantation of Online Control Station, Instructor Station and Logical Automatic Modeling tools based on AF simulation platform on Redhat Linux.
+   \end{itemize}
+
+% Project 4
+\item \textbf{Upgrading \& Maintaince of Online Control Station} \hfill \textrm{Sep 2009-Jan 2010}
+  \begin{itemize}
+  \item Upgraded \& maintained Online Control Station of Yimin, Chaohu \& Shanwei Power Plant, which was used to control and monitor the status of  equipments in the power plants.
+  \end{itemize}
+
+% Project 5
+\item \textbf{Chinese Quanpin Input Method Tool on SGI UNIX} \hfill \textrm{Jun 2009-Aug 2009}
+  \begin{itemize}
+  \item Achieved developing Chinese Quanpin Input Method Tool with X-Window programming on SGI UNIX for inputting \& displaying Chinese characters in the test system of Instructor Station.
+  \end{itemize}
+
+% Project 6
+\item \textbf{Development of The Client of Synchronization of Configuration Files} \hfill \textrm{Mar 2009-May 2009}
+  \begin{itemize}
+   \item Finished to develop the client of synchronization of configuration files based on UDP protocol for the related configuration files synchronization between the infomation server(Windows) and the online simulation server(SGI UNIX) in the digital technology power plant project.\\
+  \end{itemize}
+
+% Project 7
+\item \textbf{Development of The Server \& Client of Data Synchronocme And Storage} \hfill \textrm{Jan 2009-Mar 2009}
+  \begin{itemize}
+    \item Accomplished to develop the UNIX server \& Windows client of data synchronization and storage based on TCP/IP protocol.
+  \end{itemize}
+
+\end{itemize}
+
+\mysection{WORK EXPERIENCE}
+
+\begin{itemize}
+
+\item \textbf{Shenzhen Julong Educational Technology CO., LTD.} \hfill \textrm{August 2012-Now}
+  \begin{itemize}
+    \item Educational software IPBOARD for linux development \& packaging.
+  \end{itemize}
+
+\item \textbf{Shenzhen Chinasoft Resource Technologies Services CO., LTD.} \hfill \textrm{July 2010-Feb 2012}
+  \begin{itemize}
+  \item Long-term assignments to go to the Huawei Base, engaged in developing software outsourcing of ATE \& maintaining test equipments, and guide the production test.
+  \end{itemize}
+
+\item \textbf{AF Technology, LTD.} \hfill \textrm{July 2008-May 2010}
+  \begin{itemize}
+  \item Took primary responsibilities for developing simulation software for power plants on UNIX \& Linux system, developing \& maintaining tools based on the AF simulation platform.
+  \end{itemize} 
+
+\end{itemize}
+
+\mysection{OPEN SOURCE PROJECTS}
+
+\begin{itemize}
+\item Porting the source code of the book C++ GUI Programming with Qt4 from Qt4 to Qt5
+  \begin{description}
+    \item Project Homepage: \url{https://github.com/mutse/qt5-book-code}
+    \item Git Repo: \url{https://github.com/mutse/qt5-book-code.git}
+  \end{description}
+
+\item Gossip of Design Pattern with Python
+  \begin{description}
+    \item Project Homepage: \url{https://github.com/mutse/desgin-patterns-gossip}
+	\item Git Repo: \url{https://github.com/mutse/desgin-patterns-gossip.git}
+  \end{description}
+
+\item Kugou Online Music Player
+  \begin{description}
+    \item Project Homepage: \url{https://github.com/mutse/kugou}
+	\item Git Repo: \url{https://github.com/mutse/kugou.git}
+	\item Launchpad: \url{https://launchpad.net/~mutse-young/+archive/kugou}
+  \end{description}
+\end{itemize}
+
+\mysection{INTERESTS}
+
+\begin{itemize}
+\item Reading \& Blogging.
+\item Translating some English material related to programming.
+\item Coding, Linux \& OpenSource.
+\item Listening Light Music.
+\end{itemize}
+
+\mysection{SELF ASSESSMENT}
+
+%\begin{itemize}
+%  \item \textsc{Ability to learn} Independent thinking, with strong self-learning ability.
+%  \item \textsc{Teamwork} \hfill Have team spirit, and practical in work.
+%  \item \textsc{Character} Possessed of cheerful easy-going personality, and treat people sincerely.
+%  \item \textsc{Others} With strong mental endurance.
+%\end{itemize}
+
+\begin{tabular}{ll}
+ 	\textsc{Ability to learn} & Independent thinking, with strong self-learning ability.\\
+	\textsc{Teamwork} & Have team spirit, and practical in work.\\
+	\textsc{Character} & Possessed of cheerful easy-going personality, and treat people sincerely.\\
+	\textsc{Others} & With strong mental endurance.\\
+\end{tabular}
+
+\end{document}
+
