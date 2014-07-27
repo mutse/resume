@@ -1,7 +1,7 @@
 Resume
 ======
 
-This is my latex resume template.
+My Latex Resume Template.
 
 ### Howto Compile
 
